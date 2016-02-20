@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/wallymathieu/flip.git"
   },
-  "author": "",
+  "author": "Oskar Gewalli <oskar@gewalli.se>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/wallymathieu/flip/issues"
