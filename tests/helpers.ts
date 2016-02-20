@@ -2,17 +2,10 @@
 module helpers {
     "use strict";
 
-    export class CookieHelper {
-        cookies: ng.cookies.ICookiesService;
-
-        constructor($cookies) {
-            this.cookies = $cookies;
-        }
-        clearAll() {
-            Object.getOwnPropertyNames(this.cookies.getAll()).forEach(cookie=> {
-                this.cookies.remove(cookie);
-            });
-        }
+    export function clearAllCookies(cookies: ng.cookies.ICookiesService) {
+        Object.getOwnPropertyNames(cookies.getAll()).forEach(cookie=> {
+            cookies.remove(cookie);
+        });
     }
 
     export class FakeCookieService implements ng.cookies.ICookiesService { 

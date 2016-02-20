@@ -37,13 +37,11 @@ describe('feature Controller Test', ()=> {
             $log: mockLog
         });
         backend.flush();
+        setTimeout(() => {
+            helpers.clearAllCookies($cookies);
+        });
     }));
     
-    beforeEach(() => {
-        let cookieHelper = new helpers.CookieHelper(cookies);
-        cookieHelper.clearAll();
-    });
-
     it('contains needed definitions', () => {
         expect(mockScope.strategies.length>0).toBe(true);
         expect(mockScope.definitions).toEqual(definitions());
