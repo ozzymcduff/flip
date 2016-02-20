@@ -41,5 +41,6 @@ gulp.task('tdd', ['build.tests'], function (done) {
 });
 
 gulp.task('watch', ['build.app'], function() {
+    require('./index.js');
     gulp.watch('app/*.ts', ['build.app']);
 });

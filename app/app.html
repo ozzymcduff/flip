@@ -31,10 +31,10 @@
                 <tr>
                     <td class="name">{{ definition.name }}</td>
                     <td class="description">{{ definition.description }}</td>
-                    <td class="status">{{ $parent.status(definition.name) }}</td>
+                    <td class="status">{{ status(definition.name) }}</td>
                     
                     <td ng-repeat-start="strategy in strategies">
-                        <button ng-click="$parent.$parent.toggle(strategy, $parent.definition)">{{ $parent.$parent.toggleText(strategy, $parent.definition) }}</button></td>
+                        <button ng-click="toggle(strategy, definition)">{{ toggleText(strategy, definition) }}</button></td>
                     <td ng-repeat-end=""/>
 
                 </tr>
