@@ -25,9 +25,17 @@ build/Release
 
 # Dependency directory
 node_modules
+bower_components
 
 # Optional npm cache directory
 .npm
 
 # Optional REPL history
 .node_repl_history
+
+# since we use typescript, no need to save the js files
+app/**/*.js
+tests/**/*.js
+
+# typings are installed via tsd
+/typings

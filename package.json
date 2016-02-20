@@ -1,0 +1,32 @@
+{
+  "name": "flip",
+  "version": "1.0.0",
+  "description": "Flip lets you declare and manage feature flags, backed by cookies (private testing).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wallymathieu/flip.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wallymathieu/flip/issues"
+  },
+  "homepage": "https://github.com/wallymathieu/flip#readme",
+  "devDependencies": {
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.21",
+    "karma-jasmine": "^0.3.7",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "phantomjs-prebuilt": "^2.1.4"
+  },
+  "dependencies": {
+    "connect": "^3.4.1",
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^2.11.0",
+    "serve-static": "^1.10.2"
+  }
+}

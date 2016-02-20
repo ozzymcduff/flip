@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html ng-app="flip">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="app.js"></script>
+</head>
+<body ng-controller="featuresController">
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h1>Feature Flippers</h1>
+        <table>
+            <thead>
+                <th class="name">Feature Name</th>
+                <th class="description">Description</th>
+                <th class="status">Status</th>
+                <th ng-repeat-start="strategy in strategies">{{ strategy.name }}
+                  
+                    <span class="description">{{ strategy.description }}</span></th>
+                <th ng-repeat-end=""/>
+                <!--
+                <th>Default
+            
+                    <span class="description">The system default when no strategies match.</span></th>
+                -->
+            </thead>
+            <tbody ng-repeat="definition in definitions">
+                <tr>
+                    <td class="name">{{ definition.name }}</td>
+                    <td class="description">{{ definition.description }}</td>
+                    <td class="status">{{ $parent.status(definition.name) }}</td>
+                    
+                    <td ng-repeat-start="strategy in strategies">
+                        <button ng-click="$parent.$parent.toggle(strategy, $parent.definition)">{{ $parent.$parent.toggleText(strategy, $parent.definition) }}</button></td>
+                    <td ng-repeat-end=""/>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

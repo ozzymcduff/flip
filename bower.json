@@ -1,0 +1,26 @@
+{
+  "name": "flip",
+  "description": "Flip lets you declare and manage feature flags, backed by cookies (private testing).",
+  "main": "index.js",
+  "authors": [
+    "Oskar Gewalli <oskar@gewalli.se>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/wallymathieu/flip",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-cookies": "^1.5.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.5.0",
+    "jasmine-core": "^2.4.1"
+  }
+}
