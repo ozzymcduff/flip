@@ -1,4 +1,4 @@
-# flip
+# flip [![Build Status](https://travis-ci.org/wallymathieu/flip.svg?branch=master)](https://travis-ci.org/wallymathieu/flip)
 Flip lets you declare and manage feature flags, backed by cookies (private testing).
 
 ## Inspiration
