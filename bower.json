@@ -17,7 +17,8 @@
   ],
   "dependencies": {
     "angular": "^1.5.0",
-    "angular-cookies": "^1.5.0"
+    "angular-cookies": "^1.5.0",
+    "flip": "git://github.com/pda/flip/#^1.0.1"
   },
   "devDependencies": {
     "angular-mocks": "^1.5.0",
