@@ -74,7 +74,7 @@ describe('cookie strategy Test', () => {
             expect(strategy.knows('c_one')).toBe(true);
         });
 
-        xit('can delete knowledge of a feature', () => {
+        it('can delete knowledge of a feature', () => {
             strategy.remove('c_one');
             expect(strategy.knows('c_one')).toBe(false);
             expect(strategy.on('c_one')).toBe(false);

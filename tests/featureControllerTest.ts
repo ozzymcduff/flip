@@ -65,6 +65,27 @@ describe('feature Controller Test', ()=> {
         it('should return false if the flag does not exist', () => {
             expect(mockScope.status('other')).toBe(false);
         });
+
+        it('can flip the switch', () => {
+            let def = mockScope.definitions[0];
+            let name = def.name;
+            expect(cookie.get(`flip_${name}`)).toBe('true');
+            expect(mockScope.status(name)).toBe(true);
+            mockScope.toggle(mockScope.strategies[0], def);
+            expect(cookie.get(`flip_${name}`)).toBe('false');
+            /*setTimeout(() => { 
+                expect(mockScope.status(name)).toBe(false);
+                done();
+            })*/
+        });
+
+
+        it('status flag, status text and toggle text should return something', () => {
+            expect(mockScope.statusFlag('shiny_things')).not.toBeUndefined();
+            expect(mockScope.statusText('shiny_things')).not.toBeUndefined();
+            expect(mockScope.toggleText(mockScope.strategies[0], 'shiny_things')).not.toBeUndefined();
+        });
+
     });
 
 });

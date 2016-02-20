@@ -40,7 +40,7 @@ module flip.strategy {
             return this.cookies.put(this.cookieName(key), on ? 'true' : 'false', { domain: this.domain });
         }
         remove(definition: string) {
-            this.cookies.remove(definition, { domain: this.domain });
+            this.cookies.remove(this.cookieName(definition), { domain: this.domain });
         }
     }
 
