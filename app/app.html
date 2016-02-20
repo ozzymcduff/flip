@@ -31,7 +31,7 @@
             <tr>
                 <td class="name">{{ definition.name }}</td>
                 <td class="description">{{ definition.description }}</td>
-                <td class="status">{{ status(definition.name) }}</td>
+                <td class="status" ng-class="statusFlag(definition.name)">{{ statusText(definition.name) }}</td>
                 
                 <td ng-repeat-start="strategy in strategies">
                     <button ng-click="toggle(strategy, definition)">{{ toggleText(strategy, definition) }}</button></td>

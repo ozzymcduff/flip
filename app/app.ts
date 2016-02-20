@@ -22,12 +22,23 @@ class FeaturesController{
             this.scope.definitions = data;
             $log.log('Loaded definitions');
         });
+        let getStrategy = (definition: string) : IStrategy=> {
+            let strategies = this.scope.strategies.filter((strategy: IStrategy) => strategy.knows(definition));
+            return strategies[0];
+        };
+
         this.scope.status = (definition:string)=>{
-            let strategies = this.scope.strategies.filter( (strategy:IStrategy) => strategy.knows(definition));
-            if (strategies.length>0){
-                return strategies[0].on(definition);
+            let s = getStrategy(definition);
+            if (s!==undefined){
+                return s.on(definition);
             }
             return false;//defaultFor
+        };
+        this.scope.statusFlag = (definition: string) => {
+            return this.scope.status(definition) ? 'on' : 'off';
+        };
+        this.scope.statusText = (definition: string) => {
+            return this.scope.status(definition) ? 'Enabled' : 'Disabled';
         };
         this.scope.toggle = (strategy: IStrategy, definition: any) => {
             strategy.flip(definition.name);
@@ -66,10 +77,10 @@ export class CookieStrategy implements IStrategy{
         if (on === undefined) { 
             on = ! this.on(key);
         }
-        return this.cookies.put(this.cookieName(key), on?'true':'false'); //, {domain: this.domain}
+        return this.cookies.put(this.cookieName(key), on ? 'true' : 'false', { domain: this.domain });
     }
     remove(definition: string) { 
-        this.cookies.remove(definition);//, { domain: this.domain }
+        this.cookies.remove(definition, { domain: this.domain });
     }
 }
 
