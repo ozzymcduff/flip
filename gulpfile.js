@@ -25,7 +25,7 @@ gulp.task('build.tests', function () {
 
 var karmaConf = __dirname + '/karma.conf.js';
 
-gulp.task('test', function (done) {
+gulp.task('test', ['build.tests'], function (done) {
   new Server({
     configFile: karmaConf,
     singleRun: true
