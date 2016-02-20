@@ -1,16 +1,18 @@
 /// <reference path='../typings/tsd.d.ts' />
-/// <reference path='../app/app.ts' />
+/// <reference path='../app/strategy.ts' />
 /// <reference path='helpers.ts' />
 
 describe('cookie strategy Test', () => {
+    "use strict";
+
     var cookies: ng.cookies.ICookiesService;
-    var strategy: flip.CookieStrategy; 
+    var strategy: flip.strategy.CookieStrategy; 
 
     beforeEach(angular.mock.module('flip'));
 
     beforeEach(() => {
         cookies = new helpers.FakeCookieService();
-        strategy = new flip.CookieStrategy(cookies,'localhost');
+        strategy = new flip.strategy.CookieStrategy(cookies,'localhost');
     });
 
     describe('cookie interrogration', () => {

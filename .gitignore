@@ -39,3 +39,6 @@ tests/**/*.js
 
 # typings are installed via tsd, but there is a rate limit
 # /typings
+
+# sublime text workspace
+*.sublime-workspace

@@ -2,7 +2,8 @@
 /// <reference path='helpers.ts' />
 
 describe('feature Controller Test', ()=> {
-    // Arrange
+    "use strict";
+
     var mockScope :any= {};
     var controller;
     var cookies: ng.cookies.ICookiesService;
