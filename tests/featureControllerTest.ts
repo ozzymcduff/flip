@@ -7,7 +7,7 @@ describe('feature Controller Test', ()=> {
 
     var mockScope :any= {};
     var controller;
-    var cookies: ng.cookies.ICookiesService;
+    var $cookies: ng.cookies.ICookiesService;
     var backend;
     var mockLog;
     function definitions(){
@@ -27,24 +27,20 @@ describe('feature Controller Test', ()=> {
         backend.expect('GET', 'definitions.json').respond(definitions());
     }));
 
-    beforeEach(angular.mock.inject(($controller, $rootScope, $http, $log, $cookies) => {
+    beforeEach(angular.mock.inject(($controller, $rootScope, $http, $log, _$cookies_) => {
         mockScope = $rootScope.$new();
         mockLog = $log;
-        cookies = $cookies;
+        $cookies = _$cookies_;
         controller = $controller('featuresController', {
             $scope: mockScope,
             $http: $http,
-            $cookies: cookies,
+            $cookies: $cookies,
             $log: mockLog
         });
         backend.flush();
+        helpers.clearAllCookies(_$cookies_);
     }));
     
-    beforeEach(() => {
-        let cookieHelper = new helpers.CookieHelper(cookies);
-        cookieHelper.clearAll();
-    });
-
     it('contains needed definitions', () => {
         expect(mockScope.strategies.length>0).toBe(true);
         expect(mockScope.definitions).toEqual(definitions());
@@ -52,41 +48,46 @@ describe('feature Controller Test', ()=> {
 
     describe('feature flags', ()=> {
         beforeEach(()=>{
+            this.first_def = mockScope.definitions[0];
+            this.second_def = mockScope.definitions[1];
+
             // since we have only implemented cookies right now
-            cookies.putObject('flip_shiny_things', true);
-            cookies.putObject('flip_world_domination', false);
-            cookies.remove('flip_other');
+            $cookies.putObject(`flip_${this.first_def.name}`, true);
+            $cookies.putObject(`flip_${this.second_def.name}`, false);
+            $cookies.remove('flip_other');
         });
 
         it('can determine if switch is set', () => {
-            expect(mockScope.status('shiny_things')).toBe(true);
-            expect(mockScope.status('world_domination')).toBe(false);
+            expect(mockScope.status(this.first_def.name)).toBe(true);
+            expect(mockScope.status(this.second_def.name)).toBe(false);
         });
 
         it('should return false if the flag does not exist', () => {
             expect(mockScope.status('other')).toBe(false);
         });
 
-        it('can flip the switch', () => {
-            let def = mockScope.definitions[0];
-            let name = def.name;
-            expect(cookie.get(`flip_${name}`)).toBe('true');
-            expect(mockScope.status(name)).toBe(true);
-            mockScope.toggle(mockScope.strategies[0], def);
-            expect(cookie.get(`flip_${name}`)).toBe('false');
-            /*setTimeout(() => { 
-                expect(mockScope.status(name)).toBe(false);
-                done();
-            })*/
-        });
-
-
         it('status flag, status text and toggle text should return something', () => {
             expect(mockScope.statusFlag('shiny_things')).not.toBeUndefined();
             expect(mockScope.statusText('shiny_things')).not.toBeUndefined();
             expect(mockScope.toggleText(mockScope.strategies[0], 'shiny_things')).not.toBeUndefined();
         });
+    });
 
+    describe('can flip the switch', () => {
+        beforeEach(() => {
+            this.first_def = mockScope.definitions[0];
+            this.before_flip = mockScope.status(this.first_def.name);
+            mockScope.$apply(() => { 
+                mockScope.toggle(mockScope.strategies[0], this.first_def);
+            });
+        });
+        it('will be flipped', () => {
+            let expected = !this.before_flip;
+            expect(mockScope.status(this.first_def.name)).toBe(expected);
+            // cookie here is another cookie library, not ng
+            expect(cookie.get(`flip_${this.first_def.name}`)).toBe(expected.toString());
+            expect($cookies.get(`flip_${this.first_def.name}`)).toBe(expected.toString());
+        });
     });
 
 });
