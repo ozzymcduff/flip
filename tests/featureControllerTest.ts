@@ -1,5 +1,6 @@
 /// <reference path='../typings/tsd.d.ts' />
 /// <reference path='helpers.ts' />
+/// <reference path='../app/app.ts' />
 
 describe('feature Controller Test', ()=> {
     "use strict";

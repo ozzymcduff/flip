@@ -19,7 +19,6 @@ module.exports = function(config) {
       'bower_components/angular-cookies/angular-cookies.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/cookie/cookie.js',
-      'app/*.js',
       'tests/**/*.js'
     ],
 
