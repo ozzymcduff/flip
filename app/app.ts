@@ -46,8 +46,5 @@ class FeaturesController{
 angular.module('flip', ['ngCookies'])
     .controller('featuresController', FeaturesController)
     .constant('domain','localhost')
-    .factory('cookieStrategy', function ($cookies: ng.cookies.ICookiesService, domain:string){
-        return new flip.strategy.CookieStrategy($cookies, domain);
-    })
-    ;
+    .service('cookieStrategy', flip.strategy.CookieStrategy);
 }
