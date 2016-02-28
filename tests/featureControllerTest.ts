@@ -6,7 +6,7 @@ describe('feature Controller Test', ()=> {
     "use strict";
 
     var mockScope :any= {};
-    var controller;
+    var controller: flip.FeaturesController;
     var $cookies: ng.cookies.ICookiesService;
     var backend;
     var mockLog;
@@ -28,11 +28,10 @@ describe('feature Controller Test', ()=> {
     }));
 
     beforeEach(angular.mock.inject(($controller, $rootScope, $http, $log, _$cookies_) => {
-        mockScope = $rootScope.$new();
         mockLog = $log;
+        mockScope = $rootScope.$new();
         $cookies = _$cookies_;
         controller = $controller('featuresController', {
-            $scope: mockScope,
             $http: $http,
             $cookies: $cookies,
             $log: mockLog
@@ -42,14 +41,14 @@ describe('feature Controller Test', ()=> {
     }));
     
     it('contains needed definitions', () => {
-        expect(mockScope.strategies.length>0).toBe(true);
-        expect(mockScope.definitions).toEqual(definitions());
+        expect(controller.strategies.length > 0).toBe(true);
+        expect(controller.definitions).toEqual(definitions());
     });
 
     describe('feature flags', ()=> {
         beforeEach(()=>{
-            this.first_def = mockScope.definitions[0];
-            this.second_def = mockScope.definitions[1];
+            this.first_def = controller.definitions[0];
+            this.second_def = controller.definitions[1];
 
             // since we have only implemented cookies right now
             $cookies.putObject(`flip_${this.first_def.name}`, true);
@@ -58,32 +57,32 @@ describe('feature Controller Test', ()=> {
         });
 
         it('can determine if switch is set', () => {
-            expect(mockScope.status(this.first_def.name)).toBe(true);
-            expect(mockScope.status(this.second_def.name)).toBe(false);
+            expect(controller.status(this.first_def.name)).toBe(true);
+            expect(controller.status(this.second_def.name)).toBe(false);
         });
 
         it('should return false if the flag does not exist', () => {
-            expect(mockScope.status('other')).toBe(false);
+            expect(controller.status('other')).toBe(false);
         });
 
         it('status flag, status text and toggle text should return something', () => {
-            expect(mockScope.statusFlag('shiny_things')).not.toBeUndefined();
-            expect(mockScope.statusText('shiny_things')).not.toBeUndefined();
-            expect(mockScope.toggleText(mockScope.strategies[0], 'shiny_things')).not.toBeUndefined();
+            expect(controller.statusFlag('shiny_things')).not.toBeUndefined();
+            expect(controller.statusText('shiny_things')).not.toBeUndefined();
+            expect(controller.toggleText(controller.strategies[0], 'shiny_things')).not.toBeUndefined();
         });
     });
 
     describe('can flip the switch', () => {
         beforeEach(() => {
-            this.first_def = mockScope.definitions[0];
-            this.before_flip = mockScope.status(this.first_def.name);
+            this.first_def = controller.definitions[0];
+            this.before_flip = controller.status(this.first_def.name);
             mockScope.$apply(() => { 
-                mockScope.toggle(mockScope.strategies[0], this.first_def);
+                controller.toggle(controller.strategies[0], this.first_def);
             });
         });
         it('will be flipped', () => {
             let expected = !this.before_flip;
-            expect(mockScope.status(this.first_def.name)).toBe(expected);
+            expect(controller.status(this.first_def.name)).toBe(expected);
             // cookie here is another cookie library, not ng
             expect(cookie.get(`flip_${this.first_def.name}`)).toBe(expected.toString());
             expect($cookies.get(`flip_${this.first_def.name}`)).toBe(expected.toString());

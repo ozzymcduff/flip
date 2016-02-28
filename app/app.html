@@ -9,32 +9,34 @@
     <script src="app.js"></script>
     <link rel="stylesheet" type="text/css" href="../bower_components/flip/app/assets/stylesheets/flip.css">
 </head>
-<body ng-controller="featuresController">
+<body ng-controller="featuresController as ctrl">
 <div class="flip">
     <h1>Feature Flippers</h1>
     <table>
         <thead>
+            <tr>
             <th class="name">Feature Name</th>
             <th class="description">Description</th>
             <th class="status">Status</th>
-            <th ng-repeat-start="strategy in strategies">{{ strategy.name }}
+            <th ng-repeat-start="strategy in ctrl.strategies">{{ strategy.name }}
               
                 <span class="description">{{ strategy.description }}</span></th>
             <th ng-repeat-end=""/>
+            </tr>
             <!--
             <th>Default
         
                 <span class="description">The system default when no strategies match.</span></th>
             -->
         </thead>
-        <tbody ng-repeat="definition in definitions">
+        <tbody ng-repeat="definition in ctrl.definitions">
             <tr>
                 <td class="name">{{ definition.name }}</td>
                 <td class="description">{{ definition.description }}</td>
-                <td class="status" ng-class="statusFlag(definition.name)">{{ statusText(definition.name) }}</td>
+                <td class="status" ng-class="ctrl.statusFlag(definition.name)">{{ ctrl.statusText(definition.name) }}</td>
                 
-                <td ng-repeat-start="strategy in strategies">
-                    <button ng-click="toggle(strategy, definition)">{{ toggleText(strategy, definition) }}</button></td>
+                <td ng-repeat-start="strategy in ctrl.strategies">
+                    <button ng-click="ctrl.toggle(strategy, definition)">{{ ctrl.toggleText(strategy, definition) }}</button></td>
                 <td ng-repeat-end=""/>
 
             </tr>

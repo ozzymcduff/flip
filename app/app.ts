@@ -4,42 +4,42 @@ module flip {
 "use strict";
     export type IStrategy = flip.strategy.IStrategy;
 
-class FeaturesController{
-    private scope : any;
-    constructor($scope: ng.IScope, $http: ng.IHttpService, $log: ng.ILogService, cookieStrategy:IStrategy){
-        this.scope = $scope;
-        this.scope.strategies = [cookieStrategy];
-        this.scope.definitions = [];
+export class FeaturesController{
+    public strategies: [IStrategy];
+    public definitions: any;
+    constructor($http: ng.IHttpService, $log: ng.ILogService, cookieStrategy:IStrategy){
+        this.strategies = [cookieStrategy];
+        this.definitions = [];
 
         $http.get('definitions.json').success((data:any)=> {
-            this.scope.definitions = data;
+            this.definitions = data;
             $log.log('Loaded definitions');
         });
-        let getStrategy = (definition: string) : IStrategy=> {
-            let strategies = this.scope.strategies.filter((strategy: IStrategy) => strategy.knows(definition));
-            return strategies[0];
-        };
+    }
 
-        this.scope.status = (definition:string)=>{
-            let s = getStrategy(definition);
-            if (s!==undefined){
-                return s.on(definition);
-            }
-            return false;//defaultFor
-        };
-        this.scope.statusFlag = (definition: string) => {
-            return this.scope.status(definition) ? 'on' : 'off';
-        };
-        this.scope.statusText = (definition: string) => {
-            return this.scope.status(definition) ? 'Enabled' : 'Disabled';
-        };
-        this.scope.toggle = (strategy: IStrategy, definition: any) => {
-            strategy.flip(definition.name);
-        };
-        this.scope.toggleText = (strategy: IStrategy, definition: any) => {
-            let text = strategy.on(definition.name) ? 'off' : 'on';
-            return `Switch ${text}`;
-        };
+    getStrategy(definition: string): IStrategy {
+        let strategies = this.strategies.filter((strategy: IStrategy) => strategy.knows(definition));
+        return strategies[0];
+    }
+    status(definition: string) {
+        let s = this.getStrategy(definition);
+        if (s !== undefined) {
+            return s.on(definition);
+        }
+        return false;//defaultFor
+    }
+    toggleText(strategy: IStrategy, definition: any) {
+        let text = strategy.on(definition.name) ? 'off' : 'on';
+        return `Switch ${text}`;
+    }
+    toggle(strategy: IStrategy, definition: any) {
+        strategy.flip(definition.name);
+    }
+    statusText(definition: string) {
+        return this.status(definition) ? 'Enabled' : 'Disabled';
+    }
+    statusFlag (definition: string) {
+        return this.status(definition) ? 'on' : 'off';
     }
 }
 
